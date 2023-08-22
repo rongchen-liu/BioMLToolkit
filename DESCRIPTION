@@ -1,0 +1,46 @@
+Package: BioMLToolkit
+Title: Evaluate variable importance, model performance for each individual model, and plot ROC curves using 10 different machine learning methods.
+Version: 1.0.1
+Authors@R: 
+    c(person(given = "Rongchen", family = "Liu" , email = "rongchen.liu@foxmail.com", role = c("aut", "cre","com","cph")),
+  person(given = "Hai", family = "Zhang", email = "307396060@qq.com",role = c("ctb")),
+  person(given = "Hui", family = "Wen" , email = "huiwen@163.com", role = c("ctb")),
+  person(given = "Jun", family = "Liu" , email = "liuj86@live.cn", role = c("ctb")))
+Description: The BioMLToolkit package is a powerful toolset designed for bioinformatics and machine learning tasks.It offers a wide range of functionalities for data resampling, iterative evaluation, and analysis using various machine learning algorithms. 
+    With BioMLToolkit,you can explore the importance of variables by assessing their impact on model performance when removing them. This assessment can be performed using individual models or across multiple models simultaneously.
+    Moreover, the package provides an extensive selection of performance metrics for evaluating model effectiveness.
+    These metrics include "classif.auc," "classif.ce," "classif.acc," "classif.precision," "classif.recall," "classif.sensitivity," and "classif.specificity."
+    Additionally, BioMLToolkit offers built-in capabilities for generating ROC curves, enabling comprehensive visualization of model performance.
+    For enhanced efficiency, BioMLToolkit supports multi-threading during concurrent operations across the ten included machine learning models.
+    The BioMLToolkit package empowers bioinformatics researchers and data scientists with a comprehensive set of tools to successfully manage and analyze their datasets.
+License: AGPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Depends: 
+    DALEX,
+    DALEXtra,
+    doParallel,
+    dplyr,
+    e1071,
+    foreach,
+    future,
+    ggplot2,
+    ggsci,
+    glmnet,
+    kknn,
+    rpart,
+    mlr3,
+    mlr3verse,
+    mlr3tuning,
+    paradox,
+    parallel,
+    parallelly,
+    pROC,
+    R (>= 2.10),
+    ranger,
+    stringr,
+    tidyr,
+    tidyverse,
+    xgboost
+LazyData: true
