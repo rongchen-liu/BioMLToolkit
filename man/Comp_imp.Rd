@@ -11,6 +11,7 @@ Comp_imp(
   inner_resampless = 5,
   outer_resampless = 5,
   tuner_resolutions = 5,
+  Measures = "classif.acc",
   multi_threaded = T
 )
 }
@@ -36,6 +37,11 @@ If the parameter "all" is used, it will return a list containing the results for
 \item{tuner_resolutions}{For a character variable\code{\link[mlr3tuning]{tnr}}}
 
 \item{multi_threaded}{A logic variable to enable multi-threading during execution.}
+
+\item{Measure}{The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+"classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+"classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.}
 }
 \value{
 Return a list containing four elements: "table," "plot," "gene," and "gene_model." In the "table" element,

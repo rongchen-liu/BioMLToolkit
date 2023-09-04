@@ -1,6 +1,6 @@
 Package: BioMLToolkit
 Title: Evaluate variable importance, model performance for each individual model, and plot ROC curves using 10 different machine learning methods.
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: 
     c(person(given = "Rongchen", family = "Liu" , email = "rongchen.liu@foxmail.com", role = c("aut", "cre","com","cph")),
   person(given = "Hai", family = "Zhang", email = "307396060@qq.com",role = c("ctb")),

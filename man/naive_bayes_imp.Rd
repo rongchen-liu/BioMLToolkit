@@ -9,7 +9,8 @@ naive_bayes_imp(
   data,
   inner_resamples = 5,
   outer_resample = 5,
-  tuner_resolution = 5
+  tuner_resolution = 5,
+  Measure = "classif.acc"
 )
 }
 \arguments{
@@ -24,6 +25,11 @@ Here, 0 represents the control group (untreated), and 1 represents the treated g
 \item{outer_resample}{\code{\link[mlr3]{rsmp}}}
 
 \item{tuner_resolution}{\code{\link[mlr3tuning]{tnr}}}
+
+\item{Measure}{The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+"classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+"classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.}
 }
 \value{
 A data.frame records the dropout_loss of a model for each sampling operation,
@@ -41,7 +47,8 @@ Obtain variable importance using a naive_bayes model.
     result = naive_bayes_imp(task,data,
         inner_resamples = 5,
         outer_resample = 5,
-        tuner_resolution = 5)
+        tuner_resolution = 5,
+        Measure = "classif.acc")
     result[c(1:10),]
      }
 }

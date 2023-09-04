@@ -10,6 +10,7 @@ efficiency_mod(
   inner_resampless = 5,
   outer_resampless = 5,
   tuner_resolutions = 5,
+  Measures = "classif.acc",
   finial_score_msrs = c("classif.auc", "classif.ce", "classif.acc", "classif.precision",
     "classif.recall", "classif.sensitivity", "classif.specificity"),
   multi_threaded = T
@@ -34,6 +35,11 @@ If the parameter "all" is used, it will return a list containing the results for
 
 \item{tuner_resolution}{\code{\link[mlr3tuning]{tnr}}}
 
+\item{Measure}{The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+"classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+"classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.}
+
 \item{finial_score_msr}{A character vector representing performance metrics for the model evaluation,
 including "classif.auc," "classif.ce," "classif.acc," "classif.precision,"
 "classif.recall," "classif.sensitivity," and "classif.specificity."}
@@ -49,7 +55,20 @@ Integrate the model performance evaluation across 10 different machine learning 
 \examples{
 \donttest{
     data(test)
-    res = efficiency_mod(test[,c(1:10)])
+    res = efficiency_mod(test[,c(1:10)],
+                        result_type = "all",
+                        inner_resampless = 5,
+                        outer_resampless =5,
+                        tuner_resolutions =5,
+                        Measures = "classif.acc",
+                     finial_score_msrs = c("classif.auc",
+                                           "classif.ce",
+                                           "classif.acc",
+                                           "classif.precision",
+                                           "classif.recall",
+                                           "classif.sensitivity",
+                                           "classif.specificity"),
+                        multi_threaded = T)
     res$plot
     res$data[c(1:10),]
      }

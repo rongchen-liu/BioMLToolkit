@@ -77,6 +77,10 @@ at_creat <- function(tuner,learner,search_space,inner_resample,measure) {
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #'
 #' @return A data.frame records the dropout_loss of a model for each sampling operation,
 #'     which represents the degree of impact of removing a variable on the model.
@@ -96,8 +100,13 @@ at_creat <- function(tuner,learner,search_space,inner_resample,measure) {
 #'     rpart = rpart_imp(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
-#'         tuner_resolution = 5 )}
-rpart_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolution =5) {
+#'         tuner_resolution = 5,
+#'         Measure = "classif.acc" )}
+rpart_imp <- function(task,data,
+                      inner_resamples = 5,
+                      outer_resample =5,
+                      tuner_resolution =5,
+                      Measure = "classif.acc") {
   importance_data = function(imp_model){
     importance_handle <- function(importance_result) {
       imp_data = importance_result %>% as.data.frame()
@@ -122,7 +131,7 @@ rpart_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_reso
                                       by = c("variable"))
     imp_data
   }
-  measure <- msr("classif.auc")
+  measure <- msr(Measure)
   inner_resample <- rsmp("cv", folds = inner_resamples)
   outer_resample <- rsmp("cv", folds = outer_resample)
   tuner <- tnr("grid_search",resolution = tuner_resolution)
@@ -169,6 +178,10 @@ rpart_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_reso
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #'
 #' @return A data.frame records the dropout_loss of a model for each sampling operation,
 #'     which represents the degree of impact of removing a variable on the model.
@@ -188,8 +201,13 @@ rpart_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_reso
 #'     KNN = knn_imp(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
-#'         tuner_resolution = 5 )}
-knn_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolution =5) {
+#'         tuner_resolution = 5,
+#'         Measure = "classif.acc" )}
+knn_imp <- function(task,data,
+                    inner_resamples = 5,
+                    outer_resample =5,
+                    tuner_resolution =5,
+                    Measure = "classif.acc") {
   importance_data = function(imp_model){
     importance_handle <- function(importance_result) {
       imp_data = importance_result %>% as.data.frame()
@@ -214,7 +232,7 @@ knn_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolu
                                       by = c("variable"))
     imp_data
   }
-  measure <- msr("classif.auc")
+  measure <- msr(Measure)
   inner_resample <- rsmp("cv", folds = inner_resamples)
   outer_resample <- rsmp("cv", folds = outer_resample)
   tuner <- tnr("grid_search",resolution = tuner_resolution)
@@ -258,6 +276,10 @@ knn_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolu
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #'
 #' @return A data.frame records the dropout_loss of a model for each sampling operation,
 #'     which represents the degree of impact of removing a variable on the model.
@@ -280,7 +302,11 @@ knn_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolu
 #'         tuner_resolution = 5)
 #'     SVM[c(1:10),]
 #'      }
-svm_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolution =5) {
+svm_imp <- function(task,data,
+                    inner_resamples = 5,
+                    outer_resample =5,
+                    tuner_resolution =5,
+                    Measure = "classif.acc") {
   importance_data = function(imp_model){
     importance_handle <- function(importance_result) {
       imp_data = importance_result %>% as.data.frame()
@@ -305,7 +331,7 @@ svm_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolu
                                       by = c("variable"))
     imp_data
   }
-  measure <- msr("classif.auc")
+  measure <- msr(Measure)
   inner_resample <- rsmp("cv", folds = inner_resamples)
   outer_resample <- rsmp("cv", folds = outer_resample)
   tuner <- tnr("grid_search",resolution = tuner_resolution)
@@ -355,6 +381,10 @@ svm_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolu
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #'
 #' @return A data.frame records the dropout_loss of a model for each sampling operation,
 #'     which represents the degree of impact of removing a variable on the model.
@@ -374,10 +404,15 @@ svm_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolu
 #'     result = xgboost_imp(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
-#'         tuner_resolution = 5)
+#'         tuner_resolution = 5,
+#'         Measure = "classif.acc")
 #'     result[c(1:10),]
 #'      }
-xgboost_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolution =5) {
+xgboost_imp <- function(task,data,
+                        inner_resamples = 5,
+                        outer_resample =5,
+                        tuner_resolution =5,
+                        Measure = "classif.acc") {
   importance_data = function(imp_model){
     importance_handle <- function(importance_result) {
       imp_data = importance_result %>% as.data.frame()
@@ -402,7 +437,7 @@ xgboost_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_re
                                       by = c("variable"))
     imp_data
   }
-  measure <- msr("classif.auc")
+  measure <- msr(Measure)
   inner_resample <- rsmp("cv", folds = inner_resamples)
   outer_resample <- rsmp("cv", folds = outer_resample)
   tuner <- tnr("grid_search",resolution = tuner_resolution)
@@ -450,6 +485,10 @@ xgboost_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_re
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @return A data.frame records the dropout_loss of a model for each sampling operation,
 #'     which represents the degree of impact of removing a variable on the model.
 #'     The evaluation is done using RMSE (Root Mean Square Error)
@@ -468,10 +507,15 @@ xgboost_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_re
 #'     result = rr_imp(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
-#'         tuner_resolution = 5)
+#'         tuner_resolution = 5,
+#'         Measure = "classif.acc")
 #'     result[c(1:10),]
 #'      }
-rr_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolution =5) {
+rr_imp <- function(task,data,
+                   inner_resamples = 5,
+                   outer_resample =5,
+                   tuner_resolution =5,
+                   Measure = "classif.acc") {
   importance_data = function(imp_model){
     importance_handle <- function(importance_result) {
       imp_data = importance_result %>% as.data.frame()
@@ -496,7 +540,7 @@ rr_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolut
                                       by = c("variable"))
     imp_data
   }
-  measure <- msr("classif.auc")
+  measure <- msr(Measure)
   inner_resample <- rsmp("cv", folds = inner_resamples)
   outer_resample <- rsmp("cv", folds = outer_resample)
   tuner <- tnr("grid_search",resolution = tuner_resolution)
@@ -543,6 +587,10 @@ rr_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolut
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #'
 #' @return A data.frame records the dropout_loss of a model for each sampling operation,
 #'     which represents the degree of impact of removing a variable on the model.
@@ -562,10 +610,15 @@ rr_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolut
 #'     SVM = svm_imp(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
-#'         tuner_resolution = 5)
+#'         tuner_resolution = 5,
+#'         Measure = "classif.acc")
 #'     SVM[c(1:10),]
 #'      }
-svm_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolution =5) {
+svm_imp <- function(task,data,
+                    inner_resamples = 5,
+                    outer_resample =5,
+                    tuner_resolution =5,
+                    Measure = "classif.acc") {
   importance_data = function(imp_model){
     importance_handle <- function(importance_result) {
       imp_data = importance_result %>% as.data.frame()
@@ -590,7 +643,7 @@ svm_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolu
                                       by = c("variable"))
     imp_data
   }
-  measure <- msr("classif.auc")
+  measure <- msr(Measure)
   inner_resample <- rsmp("cv", folds = inner_resamples)
   outer_resample <- rsmp("cv", folds = outer_resample)
   tuner <- tnr("grid_search",resolution = tuner_resolution)
@@ -639,6 +692,10 @@ svm_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolu
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #'
 #' @return A data.frame records the dropout_loss of a model for each sampling operation,
 #'     which represents the degree of impact of removing a variable on the model.
@@ -658,10 +715,15 @@ svm_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolu
 #'     result = xgboost_imp(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
-#'         tuner_resolution = 5)
+#'         tuner_resolution = 5,
+#'         Measure = "classif.acc")
 #'     result[c(1:10),]
 #'      }
-xgboost_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolution =5) {
+xgboost_imp <- function(task,data,
+                        inner_resamples = 5,
+                        outer_resample =5,
+                        tuner_resolution =5,
+                        Measure = "classif.acc") {
   importance_data = function(imp_model){
     importance_handle <- function(importance_result) {
       imp_data = importance_result %>% as.data.frame()
@@ -686,7 +748,7 @@ xgboost_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_re
                                       by = c("variable"))
     imp_data
   }
-  measure <- msr("classif.auc")#模型训练评价指标
+  measure <- msr(Measure)
   inner_resample <- rsmp("cv", folds = inner_resamples)
   outer_resample <- rsmp("cv", folds = outer_resample)
   tuner <- tnr("grid_search",resolution = tuner_resolution)
@@ -734,6 +796,10 @@ xgboost_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_re
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @return A data.frame records the dropout_loss of a model for each sampling operation,
 #'     which represents the degree of impact of removing a variable on the model.
 #'     The evaluation is done using RMSE (Root Mean Square Error)
@@ -752,10 +818,15 @@ xgboost_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_re
 #'     result = glmnet_imp(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
-#'         tuner_resolution = 5)
+#'         tuner_resolution = 5,
+#'         Measure = "classif.acc")
 #'     result[c(1:10),]
 #'      }
-glmnet_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolution =5) {
+glmnet_imp <- function(task,data,
+                       inner_resamples = 5,
+                       outer_resample =5,
+                       tuner_resolution =5,
+                       Measure = "classif.acc") {
   importance_data = function(imp_model){
     importance_handle <- function(importance_result) {
       imp_data = importance_result %>% as.data.frame()
@@ -780,7 +851,7 @@ glmnet_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_res
                                       by = c("variable"))
     imp_data
   }
-  measure <- msr("classif.auc")#模型训练评价指标
+  measure <- msr(Measure)
   inner_resample <- rsmp("cv", folds = inner_resamples)
   outer_resample <- rsmp("cv", folds = outer_resample)
   tuner <- tnr("grid_search",resolution = tuner_resolution)
@@ -827,6 +898,10 @@ glmnet_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_res
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @return A data.frame records the dropout_loss of a model for each sampling operation,
 #'     which represents the degree of impact of removing a variable on the model.
 #'     The evaluation is done using RMSE (Root Mean Square Error)
@@ -845,10 +920,15 @@ glmnet_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_res
 #'     result = lda_imp(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
-#'         tuner_resolution = 5)
+#'         tuner_resolution = 5,
+#'         Measure = "classif.acc")
 #'     result[c(1:10),]
 #'      }
-lda_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolution =5) {
+lda_imp <- function(task,data,
+                    inner_resamples = 5,
+                    outer_resample =5,
+                    tuner_resolution =5,
+                    Measure = "classif.acc") {
   importance_data = function(imp_model){
     importance_handle <- function(importance_result) {
       imp_data = importance_result %>% as.data.frame()
@@ -873,7 +953,7 @@ lda_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolu
                                       by = c("variable"))
     imp_data
   }
-  measure <- msr("classif.auc")#模型训练评价指标
+  measure <- msr(Measure)
   inner_resample <- rsmp("cv", folds = inner_resamples)
   outer_resample <- rsmp("cv", folds = outer_resample)
   tuner <- tnr("grid_search",resolution = tuner_resolution)
@@ -905,6 +985,10 @@ lda_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolu
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @return A data.frame records the dropout_loss of a model for each sampling operation,
 #'     which represents the degree of impact of removing a variable on the model.
 #'     The evaluation is done using RMSE (Root Mean Square Error)
@@ -923,10 +1007,15 @@ lda_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolu
 #'     result = logreg_imp(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
-#'         tuner_resolution = 5)
+#'         tuner_resolution = 5,
+#'         Measure = "classif.acc")
 #'     result[c(1:10),]
 #'      }
-logreg_imp <-function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolution =5) {
+logreg_imp <-function(task,data,
+                      inner_resamples = 5,
+                      outer_resample =5,
+                      tuner_resolution =5,
+                      Measure = "classif.acc") {
   importance_data = function(imp_model){
     importance_handle <- function(importance_result) {
       imp_data = importance_result %>% as.data.frame()
@@ -951,7 +1040,7 @@ logreg_imp <-function(task,data,inner_resamples = 5,outer_resample =5,tuner_reso
                                       by = c("variable"))
     imp_data
   }
-  measure <- msr("classif.auc")
+  measure <- msr(Measure)
   inner_resample <- rsmp("cv", folds = inner_resamples)
   outer_resample <- rsmp("cv", folds = outer_resample)
   tuner <- tnr("grid_search",resolution = tuner_resolution)
@@ -981,6 +1070,10 @@ logreg_imp <-function(task,data,inner_resamples = 5,outer_resample =5,tuner_reso
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @return A data.frame records the dropout_loss of a model for each sampling operation,
 #'     which represents the degree of impact of removing a variable on the model.
 #'     The evaluation is done using RMSE (Root Mean Square Error)
@@ -999,10 +1092,15 @@ logreg_imp <-function(task,data,inner_resamples = 5,outer_resample =5,tuner_reso
 #'     result = naive_bayes_imp(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
-#'         tuner_resolution = 5)
+#'         tuner_resolution = 5,
+#'         Measure = "classif.acc")
 #'     result[c(1:10),]
 #'      }
-naive_bayes_imp <-function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolution =5) {
+naive_bayes_imp <-function(task,data,
+                           inner_resamples = 5,
+                           outer_resample =5,
+                           tuner_resolution =5,
+                           Measure = "classif.acc") {
   importance_data = function(imp_model){
     importance_handle <- function(importance_result) {
       imp_data = importance_result %>% as.data.frame()
@@ -1027,7 +1125,7 @@ naive_bayes_imp <-function(task,data,inner_resamples = 5,outer_resample =5,tuner
                                       by = c("variable"))
     imp_data
   }
-  measure <- msr("classif.auc")
+  measure <- msr(Measure)
   inner_resample <- rsmp("cv", folds = inner_resamples)
   outer_resample <- rsmp("cv", folds = outer_resample)
   tuner <- tnr("grid_search",resolution = tuner_resolution)
@@ -1070,6 +1168,10 @@ naive_bayes_imp <-function(task,data,inner_resamples = 5,outer_resample =5,tuner
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @return A data.frame records the dropout_loss of a model for each sampling operation,
 #'     which represents the degree of impact of removing a variable on the model.
 #'     The evaluation is done using RMSE (Root Mean Square Error)
@@ -1088,10 +1190,15 @@ naive_bayes_imp <-function(task,data,inner_resamples = 5,outer_resample =5,tuner
 #'     result = nnet_imp(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
-#'         tuner_resolution = 5)
+#'         tuner_resolution = 5,
+#'         Measure = "classif.acc")
 #'     result[c(1:10),]
 #'      }
-nnet_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resolution =5) {
+nnet_imp <- function(task,data,
+                     inner_resamples = 5,
+                     outer_resample =5,
+                     tuner_resolution =5,
+                     Measure = "classif.acc") {
   importance_data = function(imp_model){
     importance_handle <- function(importance_result) {
       imp_data = importance_result %>% as.data.frame()
@@ -1116,7 +1223,7 @@ nnet_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resol
                                       by = c("variable"))
     imp_data
   }
-  measure <- msr("classif.auc")
+  measure <- msr(Measure)
   inner_resample <- rsmp("cv", folds = inner_resamples)
   outer_resample <- rsmp("cv", folds = outer_resample)
   tuner <- tnr("grid_search",resolution = tuner_resolution)
@@ -1168,6 +1275,10 @@ nnet_imp <- function(task,data,inner_resamples = 5,outer_resample =5,tuner_resol
 #' @param inner_resampless For a character variable,\code{\link[mlr3]{rsmp}}
 #' @param outer_resampless For a character variable,\code{\link[mlr3]{rsmp}}
 #' @param tuner_resolutions For a character variable\code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @param multi_threaded A logic variable to enable multi-threading during execution.
 #'
 #' @return Return a list containing four elements: "table," "plot," "gene," and "gene_model." In the "table" element,
@@ -1201,6 +1312,7 @@ Comp_imp = function(gene_exp,
                     inner_resampless = 5,
                     outer_resampless = 5,
                     tuner_resolutions = 5,
+                    Measures = "classif.acc",
                     multi_threaded = T){
 
   data = data_handle(gene_exp)
@@ -1234,11 +1346,12 @@ Comp_imp = function(gene_exp,
 
     models <- foreach(model = models,
                       .packages = c("mlr3verse", "tidyverse","DALEX","DALEXtra"),
-                      .export = c("inner_resampless","outer_resampless","tuner_resolutions")) %dopar% {
+                      .export = c("inner_resampless","outer_resampless","tuner_resolutions","Measures")) %dopar% {
                         mod <- model(task,data,
                                      inner_resamples = inner_resampless,
                                      outer_resample = outer_resampless,
-                                     tuner_resolution =tuner_resolutions )
+                                     tuner_resolution =tuner_resolutions,
+                                     Measure = Measures )
                         return(mod)
                       }
     stopCluster(cl)
@@ -1246,43 +1359,53 @@ Comp_imp = function(gene_exp,
     rpart = rpart_imp(task,data,
                       inner_resamples = inner_resampless,
                       outer_resample = outer_resampless,
-                      tuner_resolution =tuner_resolutions )
+                      tuner_resolution =tuner_resolutions,
+                      Measure = Measures)
     knn = knn_imp(task,data,
                   inner_resamples = inner_resampless,
                   outer_resample = outer_resampless,
-                  tuner_resolution =tuner_resolutions )
+                  tuner_resolution =tuner_resolutions,
+                  Measure = Measures)
     svm = svm_imp(task,data,
                   inner_resamples = inner_resampless,
                   outer_resample = outer_resampless,
-                  tuner_resolution =tuner_resolutions )
+                  tuner_resolution =tuner_resolutions,
+                  Measure = Measures)
     xgboost = xgboost_imp(task,data,
                           inner_resamples = inner_resampless,
                           outer_resample = outer_resampless,
-                          tuner_resolution =tuner_resolutions )
+                          tuner_resolution =tuner_resolutions,
+                          Measure = Measures )
     rr = rr_imp(task,data,
                 inner_resamples = inner_resampless,
                 outer_resample = outer_resampless,
-                tuner_resolution =tuner_resolutions )
+                tuner_resolution =tuner_resolutions,
+                Measure = Measures )
     glmnet = glmnet_imp(task,data,
                         inner_resamples = inner_resampless,
                         outer_resample = outer_resampless,
-                        tuner_resolution =tuner_resolutions )
+                        tuner_resolution =tuner_resolutions,
+                        Measure = Measures)
     lda = lda_imp(task,data,
                   inner_resamples = inner_resampless,
                   outer_resample = outer_resampless,
-                  tuner_resolution =tuner_resolutions )
+                  tuner_resolution =tuner_resolutions,
+                  Measure = Measures)
     logreg = logreg_imp(task,data,
                         inner_resamples = inner_resampless,
                         outer_resample = outer_resampless,
-                        tuner_resolution =tuner_resolutions )
+                        tuner_resolution =tuner_resolutions,
+                        Measure = Measures)
     naive_bayes = naive_bayes_imp(task,data,
                                   inner_resamples = inner_resampless,
                                   outer_resample = outer_resampless,
-                                  tuner_resolution =tuner_resolutions )
+                                  tuner_resolution =tuner_resolutions,
+                                  Measure = Measures)
     nnet = nnet_imp(task,data,
                     inner_resamples = inner_resampless,
                     outer_resample = outer_resampless,
-                    tuner_resolution =tuner_resolutions )
+                    tuner_resolution =tuner_resolutions,
+                    Measure = Measures)
 
 
     models = list(rpart,knn,svm,xgboost,rr,

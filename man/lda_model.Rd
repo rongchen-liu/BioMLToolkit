@@ -9,6 +9,7 @@ lda_model(
   data,
   inner_resamples = 5,
   outer_resamples = 5,
+  Measure = "classif.acc",
   tuner_resolution = 5,
   finial_score_msr = c("classif.auc", "classif.ce", "classif.acc", "classif.precision",
     "classif.recall", "classif.sensitivity", "classif.specificity")
@@ -22,6 +23,11 @@ Additionally, there should be an additional column called "type" consisting of 0
 Here, 0 represents the control group (untreated), and 1 represents the treated group.}
 
 \item{inner_resamples}{\code{\link[mlr3]{rsmp}}}
+
+\item{Measure}{The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+"classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+"classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.}
 
 \item{tuner_resolution}{\code{\link[mlr3tuning]{tnr}}}
 
@@ -46,6 +52,7 @@ Performance evaluation of LDA model
     result = lda_model(task,data,
         inner_resamples = 5,
         outer_resample = 5,
+        Measure = "classif.acc",
         tuner_resolution = 5,
         finial_score_msr = c("classif.auc","classif.ce","classif.acc",
         "classif.precision","classif.recall","classif.sensitivity",

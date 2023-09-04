@@ -6,6 +6,10 @@
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @param finial_score_msr A character vector representing performance metrics for the model evaluation,
 #'      including "classif.auc," "classif.ce," "classif.acc," "classif.precision,"
 #'       "classif.recall," "classif.sensitivity," and "classif.specificity."
@@ -25,6 +29,7 @@
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
 #'         tuner_resolution = 5,
+#'         Measure = "classif.acc",
 #'         finial_score_msr = c("classif.auc","classif.ce","classif.acc",
 #'         "classif.precision","classif.recall","classif.sensitivity",
 #'          "classif.specificity")
@@ -35,6 +40,7 @@ rpart_model <- function(task,data,
                         inner_resamples = 5,
                         outer_resamples =5,
                         tuner_resolution =5,
+                        Measure = "classif.acc",
                         finial_score_msr = c("classif.auc",
                                              "classif.ce",
                                              "classif.acc",
@@ -54,7 +60,7 @@ rpart_model <- function(task,data,
 
     at
   }
-  measure <- msr("classif.auc")#模型训练评价指标
+  measure <- msr(Measure)#模型训练评价指标
   inner_resample <- rsmp("cv", folds = inner_resamples)#内层重采样策略
   outer_resample <- rsmp("cv", folds = outer_resamples)#外层重采样策略
   tuner <- tnr("grid_search",resolution = tuner_resolution)#超参数搜索策略
@@ -90,6 +96,10 @@ rpart_model <- function(task,data,
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @param finial_score_msr A character vector representing performance metrics for the model evaluation,
 #'      including "classif.auc," "classif.ce," "classif.acc," "classif.precision,"
 #'       "classif.recall," "classif.sensitivity," and "classif.specificity."
@@ -109,6 +119,7 @@ rpart_model <- function(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
 #'         tuner_resolution = 5,
+#'         Measure = "classif.acc",
 #'         finial_score_msr = c("classif.auc","classif.ce","classif.acc",
 #'         "classif.precision","classif.recall","classif.sensitivity",
 #'          "classif.specificity")
@@ -119,6 +130,7 @@ knn_model <- function(task,data,
                       inner_resamples = 5,
                       outer_resamples =5,
                       tuner_resolution =5,
+                      Measure = "classif.acc",
                       finial_score_msr = c("classif.auc",
                                            "classif.ce",
                                            "classif.acc",
@@ -137,7 +149,7 @@ knn_model <- function(task,data,
 
     at
   }
-  measure <- msr("classif.auc")#模型训练评价指标
+  measure <- msr(Measure)#模型训练评价指标
   inner_resample <- rsmp("cv", folds = inner_resamples)#内层重采样策略
   outer_resample <- rsmp("cv", folds = outer_resamples)#外层重采样策略
   tuner <- tnr("grid_search",resolution = tuner_resolution)#超参数搜索策略
@@ -173,6 +185,10 @@ knn_model <- function(task,data,
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @param finial_score_msr A character vector representing performance metrics for the model evaluation,
 #'      including "classif.auc," "classif.ce," "classif.acc," "classif.precision,"
 #'       "classif.recall," "classif.sensitivity," and "classif.specificity."
@@ -192,6 +208,7 @@ knn_model <- function(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
 #'         tuner_resolution = 5,
+#'         Measure = "classif.acc",
 #'         finial_score_msr = c("classif.auc","classif.ce","classif.acc",
 #'         "classif.precision","classif.recall","classif.sensitivity",
 #'          "classif.specificity")
@@ -202,6 +219,7 @@ svm_model<- function(task,data,
                      inner_resamples = 5,
                      outer_resamples =5,
                      tuner_resolution =5,
+                     Measure = "classif.acc",
                      finial_score_msr = c("classif.auc",
                                           "classif.ce",
                                           "classif.acc",
@@ -221,7 +239,7 @@ svm_model<- function(task,data,
 
     at
   }
-  measure <- msr("classif.auc")#模型训练评价指标
+  measure <- msr(Measure)#模型训练评价指标
   inner_resample <- rsmp("cv", folds = inner_resamples)#内层重采样策略
   outer_resample <- rsmp("cv", folds = outer_resamples)#外层重采样策略
   tuner <- tnr("grid_search",resolution = tuner_resolution)#超参数搜索策略
@@ -262,6 +280,10 @@ svm_model<- function(task,data,
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @param finial_score_msr A character vector representing performance metrics for the model evaluation,
 #'      including "classif.auc," "classif.ce," "classif.acc," "classif.precision,"
 #'       "classif.recall," "classif.sensitivity," and "classif.specificity."
@@ -281,6 +303,7 @@ svm_model<- function(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
 #'         tuner_resolution = 5,
+#'         Measure = "classif.acc",
 #'         finial_score_msr = c("classif.auc","classif.ce","classif.acc",
 #'         "classif.precision","classif.recall","classif.sensitivity",
 #'          "classif.specificity")
@@ -291,6 +314,7 @@ xgboost_model<- function(task,data,
                          inner_resamples = 5,
                          outer_resamples =5,
                          tuner_resolution =5,
+                         Measure = "classif.acc",
                          finial_score_msr = c("classif.auc",
                                               "classif.ce",
                                               "classif.acc",
@@ -309,7 +333,7 @@ xgboost_model<- function(task,data,
 
     at
   }
-  measure <- msr("classif.auc")#模型训练评价指标
+  measure <- msr(Measure)#模型训练评价指标
   inner_resample <- rsmp("cv", folds = inner_resamples)#内层重采样策略
   outer_resample <- rsmp("cv", folds = outer_resamples)#外层重采样策略
   tuner <- tnr("grid_search",resolution = tuner_resolution)#超参数搜索策略
@@ -347,6 +371,10 @@ xgboost_model<- function(task,data,
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @param finial_score_msr A character vector representing performance metrics for the model evaluation,
 #'      including "classif.auc," "classif.ce," "classif.acc," "classif.precision,"
 #'       "classif.recall," "classif.sensitivity," and "classif.specificity."
@@ -366,6 +394,7 @@ xgboost_model<- function(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
 #'         tuner_resolution = 5,
+#'         Measure = "classif.acc",
 #'         finial_score_msr = c("classif.auc","classif.ce","classif.acc",
 #'         "classif.precision","classif.recall","classif.sensitivity",
 #'          "classif.specificity")
@@ -376,6 +405,7 @@ rr_model <- function(task,data,
                      inner_resamples = 5,
                      outer_resamples =5,
                      tuner_resolution =5,
+                     Measure = "classif.acc",
                      finial_score_msr = c("classif.auc",
                                           "classif.ce",
                                           "classif.acc",
@@ -394,7 +424,7 @@ rr_model <- function(task,data,
 
     at
   }
-  measure <- msr("classif.auc")#模型训练评价指标
+  measure <- msr(Measure)#模型训练评价指标
   inner_resample <- rsmp("cv", folds = inner_resamples)#内层重采样策略
   outer_resample <- rsmp("cv", folds = outer_resamples)#外层重采样策略
   tuner <- tnr("grid_search",resolution = tuner_resolution)#超参数搜索策略
@@ -433,6 +463,10 @@ rr_model <- function(task,data,
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @param finial_score_msr A character vector representing performance metrics for the model evaluation,
 #'      including "classif.auc," "classif.ce," "classif.acc," "classif.precision,"
 #'       "classif.recall," "classif.sensitivity," and "classif.specificity."
@@ -452,6 +486,7 @@ rr_model <- function(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
 #'         tuner_resolution = 5,
+#'         Measure = "classif.acc",
 #'         finial_score_msr = c("classif.auc","classif.ce","classif.acc",
 #'         "classif.precision","classif.recall","classif.sensitivity",
 #'          "classif.specificity")
@@ -461,6 +496,7 @@ rr_model <- function(task,data,
 glmnet_model <- function(task,data,
                          inner_resamples = 5,
                          outer_resamples =5,
+                         Measure = "classif.acc",
                          tuner_resolution =5,
                          finial_score_msr = c("classif.auc",
                                               "classif.ce",
@@ -480,7 +516,7 @@ glmnet_model <- function(task,data,
 
     at
   }
-  measure <- msr("classif.auc")#模型训练评价指标
+  measure <- msr(Measure)#模型训练评价指标
   inner_resample <- rsmp("cv", folds = inner_resamples)#内层重采样策略
   outer_resample <- rsmp("cv", folds = outer_resamples)#外层重采样策略
   tuner <- tnr("grid_search",resolution = tuner_resolution)#超参数搜索策略
@@ -517,6 +553,10 @@ glmnet_model <- function(task,data,
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @param finial_score_msr A character vector representing performance metrics for the model evaluation,
 #'      including "classif.auc," "classif.ce," "classif.acc," "classif.precision,"
 #'       "classif.recall," "classif.sensitivity," and "classif.specificity."
@@ -535,6 +575,7 @@ glmnet_model <- function(task,data,
 #'     result = lda_model(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
+#'         Measure = "classif.acc",
 #'         tuner_resolution = 5,
 #'         finial_score_msr = c("classif.auc","classif.ce","classif.acc",
 #'         "classif.precision","classif.recall","classif.sensitivity",
@@ -545,6 +586,7 @@ glmnet_model <- function(task,data,
 lda_model <-function(task,data,
                      inner_resamples = 5,
                      outer_resamples =5,
+                     Measure = "classif.acc",
                      tuner_resolution =5,
                      finial_score_msr = c("classif.auc",
                                           "classif.ce",
@@ -564,7 +606,7 @@ lda_model <-function(task,data,
 
     at
   }
-  measure <- msr("classif.auc")#模型训练评价指标
+  measure <- msr(Measure)#模型训练评价指标
   inner_resample <- rsmp("cv", folds = inner_resamples)#内层重采样策略
   outer_resample <- rsmp("cv", folds = outer_resamples)#外层重采样策略
   tuner <- tnr("grid_search",resolution = tuner_resolution)#超参数搜索策略
@@ -597,6 +639,10 @@ lda_model <-function(task,data,
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @param finial_score_msr A character vector representing performance metrics for the model evaluation,
 #'      including "classif.auc," "classif.ce," "classif.acc," "classif.precision,"
 #'       "classif.recall," "classif.sensitivity," and "classif.specificity."
@@ -616,6 +662,7 @@ lda_model <-function(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
 #'         tuner_resolution = 5,
+#'         Measure = "classif.acc",
 #'         finial_score_msr = c("classif.auc","classif.ce","classif.acc",
 #'         "classif.precision","classif.recall","classif.sensitivity",
 #'          "classif.specificity")
@@ -626,6 +673,7 @@ logreg_model <-function(task,data,
                         inner_resamples = 5,
                         outer_resamples =5,
                         tuner_resolution =5,
+                        Measure = "classif.acc",
                         finial_score_msr = c("classif.auc",
                                              "classif.ce",
                                              "classif.acc",
@@ -644,7 +692,7 @@ logreg_model <-function(task,data,
 
     at
   }
-  measure <- msr("classif.auc")#模型训练评价指标
+  measure <- msr(Measure)#模型训练评价指标
   inner_resample <- rsmp("cv", folds = inner_resamples)#内层重采样策略
   outer_resample <- rsmp("cv", folds = outer_resamples)#外层重采样策略
   tuner <- tnr("grid_search",resolution = tuner_resolution)#超参数搜索策略
@@ -677,6 +725,10 @@ logreg_model <-function(task,data,
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @param finial_score_msr A character vector representing performance metrics for the model evaluation,
 #'      including "classif.auc," "classif.ce," "classif.acc," "classif.precision,"
 #'       "classif.recall," "classif.sensitivity," and "classif.specificity."
@@ -696,6 +748,7 @@ logreg_model <-function(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
 #'         tuner_resolution = 5,
+#'         Measure = "classif.acc",
 #'         finial_score_msr = c("classif.auc","classif.ce","classif.acc",
 #'         "classif.precision","classif.recall","classif.sensitivity",
 #'          "classif.specificity")
@@ -706,6 +759,7 @@ naive_bayes_model <-function(task,data,
                              inner_resamples = 5,
                              outer_resamples =5,
                              tuner_resolution =5,
+                             Measure = "classif.acc",
                              finial_score_msr = c("classif.auc",
                                                   "classif.ce",
                                                   "classif.acc",
@@ -724,7 +778,7 @@ naive_bayes_model <-function(task,data,
 
     at
   }
-  measure <- msr("classif.auc")#模型训练评价指标
+  measure <- msr(Measure)#模型训练评价指标
   inner_resample <- rsmp("cv", folds = inner_resamples)#内层重采样策略
   outer_resample <- rsmp("cv", folds = outer_resamples)#外层重采样策略
   tuner <- tnr("grid_search",resolution = tuner_resolution)#超参数搜索策略
@@ -759,6 +813,10 @@ naive_bayes_model <-function(task,data,
 #' @param inner_resamples \code{\link[mlr3]{rsmp}}
 #' @param outer_resample \code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @param finial_score_msr A character vector representing performance metrics for the model evaluation,
 #'      including "classif.auc," "classif.ce," "classif.acc," "classif.precision,"
 #'       "classif.recall," "classif.sensitivity," and "classif.specificity."
@@ -778,6 +836,7 @@ naive_bayes_model <-function(task,data,
 #'         inner_resamples = 5,
 #'         outer_resample = 5,
 #'         tuner_resolution = 5,
+#'         Measure = "classif.acc",
 #'         finial_score_msr = c("classif.auc","classif.ce","classif.acc",
 #'         "classif.precision","classif.recall","classif.sensitivity",
 #'          "classif.specificity")
@@ -788,6 +847,7 @@ nnet_model <- function(task,data,
                        inner_resamples = 5,
                        outer_resamples =5,
                        tuner_resolution =5,
+                       Measure = "classif.acc",
                        finial_score_msr = c("classif.auc",
                                             "classif.ce",
                                             "classif.acc",
@@ -806,7 +866,7 @@ nnet_model <- function(task,data,
 
     at
   }
-  measure <- msr("classif.auc")#模型训练评价指标
+  measure <- msr(Measure)#模型训练评价指标
   inner_resample <- rsmp("cv", folds = inner_resamples)#内层重采样策略
   outer_resample <- rsmp("cv", folds = outer_resamples)#外层重采样策略
   tuner <- tnr("grid_search",resolution = tuner_resolution)#超参数搜索策略
@@ -849,6 +909,10 @@ nnet_model <- function(task,data,
 #' @param inner_resampless For a character variable,\code{\link[mlr3]{rsmp}}
 #' @param outer_resampless For a character variable,\code{\link[mlr3]{rsmp}}
 #' @param tuner_resolution \code{\link[mlr3tuning]{tnr}}
+#' @param Measure The default value is set to "classif.acc."\code{\link[mlr3]{Measure}}A character vector that can include any of the following metrics is used to evaluate model performance: "classif.acc,"
+#'      "classif.auc," "classif.bacc," "classif.bbrier," "classif.ce," "classif.costs," "classif.dor,"
+#'      "classif.precision," "classif.recall," "classif.sensitivity," "classif.specificity," "classif.tn,"
+#'      and "classif.tp." These metrics provide a comprehensive evaluation of the model's effectiveness.
 #' @param finial_score_msr A character vector representing performance metrics for the model evaluation,
 #'      including "classif.auc," "classif.ce," "classif.acc," "classif.precision,"
 #'       "classif.recall," "classif.sensitivity," and "classif.specificity."
@@ -870,7 +934,20 @@ nnet_model <- function(task,data,
 #' @import tidyr
 #' @examples \donttest{
 #'     data(test)
-#'     res = efficiency_mod(test[,c(1:10)])
+#'     res = efficiency_mod(test[,c(1:10)],
+#'                         result_type = "all",
+#'                         inner_resampless = 5,
+#'                         outer_resampless =5,
+#'                         tuner_resolutions =5,
+#'                         Measures = "classif.acc",
+#'                      finial_score_msrs = c("classif.auc",
+#'                                            "classif.ce",
+#'                                            "classif.acc",
+#'                                            "classif.precision",
+#'                                            "classif.recall",
+#'                                            "classif.sensitivity",
+#'                                            "classif.specificity"),
+#'                         multi_threaded = T)
 #'     res$plot
 #'     res$data[c(1:10),]
 #'      }
@@ -879,6 +956,7 @@ efficiency_mod <- function(gene_exp,
                            inner_resampless = 5,
                            outer_resampless =5,
                            tuner_resolutions =5,
+                           Measures = "classif.acc",
                            finial_score_msrs = c("classif.auc",
                                                 "classif.ce",
                                                 "classif.acc",
@@ -902,7 +980,8 @@ efficiency_mod <- function(gene_exp,
       mod_dat = model(task,data,
                       inner_resamples = inner_resampless,
                       outer_resamples = outer_resampless,
-                      finial_score_msr = finial_score_msrs)
+                      finial_score_msr = finial_score_msrs,
+                      Measure = Measures)
       return(mod_dat)
     }
     # 关闭并行计算集群
@@ -916,43 +995,54 @@ efficiency_mod <- function(gene_exp,
     rpart = rpart_model(task,data,
                 inner_resamples = inner_resampless,
                 outer_resamples = outer_resampless,
-                finial_score_msr = finial_score_msrs)
+                finial_score_msr = finial_score_msrs,
+                Measure = Measures)
     knn = knn_model(task,data,
                     inner_resamples = inner_resampless,
                     outer_resamples = outer_resampless,
-                    finial_score_msr = finial_score_msrs)
+                    finial_score_msr = finial_score_msrs,
+                    Measure = Measures)
     svm = svm_model(task,data,
                     inner_resamples = inner_resampless,
                     outer_resamples = outer_resampless,
-                    finial_score_msr = finial_score_msrs)
+                    finial_score_msr = finial_score_msrs,
+                    Measure = Measures)
     xgboost = xgboost_model(task,data,
                             inner_resamples = inner_resampless,
                             outer_resamples = outer_resampless,
-                            finial_score_msr = finial_score_msrs)
+                            finial_score_msr = finial_score_msrs,
+                            Measure = Measures
+                            )
     rr = rr_model(task,data,
                   inner_resamples = inner_resampless,
                   outer_resamples = outer_resampless,
-                  finial_score_msr = finial_score_msrs)
+                  finial_score_msr = finial_score_msrs,
+                  Measure = Measures)
     glmnet = glmnet_model(task,data,
                          inner_resamples = inner_resampless,
                          outer_resamples = outer_resampless,
-                         finial_score_msr = finial_score_msrs)
+                         finial_score_msr = finial_score_msrs,
+                         Measure = Measures)
     lda = lda_model(task,data,
                     inner_resamples = inner_resampless,
                     outer_resamples = outer_resampless,
-                    finial_score_msr = finial_score_msrs)
+                    finial_score_msr = finial_score_msrs,
+                    Measure = Measures)
     logreg = logreg_model(task,data,
                           inner_resamples = inner_resampless,
                           outer_resamples = outer_resampless,
-                          finial_score_msr = finial_score_msrs)
+                          finial_score_msr = finial_score_msrs,
+                          Measure = Measures)
     naive_bayes = naive_bayes_model(task,data,
                                     inner_resamples = inner_resampless,
                                     outer_resamples = outer_resampless,
-                                    finial_score_msr = finial_score_msrs)
+                                    finial_score_msr = finial_score_msrs,
+                                    Measure = Measures)
     nnet = nnet_model(task,data,
                       inner_resamples = inner_resampless,
                       outer_resamples = outer_resampless,
-                      finial_score_msr = finial_score_msrs)
+                      finial_score_msr = finial_score_msrs,
+                      Measure = Measures)
     result_classif = rpart %>%
       bind_rows(knn) %>%
       bind_rows(svm) %>%
@@ -989,3 +1079,4 @@ efficiency_mod <- function(gene_exp,
   if (result_type == "plot") {return(plot_hp)}
   if (result_type == "all") {return(res_EM)}
 }
+
